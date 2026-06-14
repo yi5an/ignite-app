@@ -1,3 +1,125 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ─── Font Fallback Declarations (Web Preview) ───────────────
+ * In React Native, fonts are loaded via expo-font at runtime.
+ * These @font-face rules serve as fallback for web previews
+ * and any CSS-based rendering (e.g. storybook, docs).
+ * ────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxmI-LDJQYQ98.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmsans/v15/rP2tp2Ywxg09Kz3MUtvuDA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmmono/v12/aFt7M4gcW9bD09JmD5bNbg.woff2') format('woff2');
+}
+
+/* ─── CSS Custom Properties (Reference) ──────────────────────
+ * These variables mirror the Tailwind theme tokens above.
+ * Use them in any raw CSS or for debugging purposes.
+ * In RN components, prefer NativeWind classes (bg-bg, text-text, etc.)
+ * ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Backgrounds */
+  --color-bg: #0A0A0F;
+  --color-surface: #111118;
+  --color-card: #18181F;
+  --color-card2: #1E1E28;
+  --color-border: #2A2A38;
+  --color-border2: #333345;
+
+  /* Brand */
+  --color-blue: #4F8EF7;
+  --color-blue2: #3B7BF5;
+  --color-green: #34D399;
+  --color-amber: #FBBF24;
+  --color-purple: #A78BFA;
+
+  /* Text */
+  --color-text: #E8E8F0;
+  --color-text2: #8888A0;
+  --color-text3: #55556A;
+
+  /* Category */
+  --color-work: #4F8EF7;
+  --color-study: #34D399;
+  --color-creative: #A78BFA;
+
+  /* Glow */
+  --glow-blue: rgba(79,142,247,0.18);
+  --glow-green: rgba(52,211,153,0.15);
+  --glow-amber: rgba(251,191,36,0.15);
+  --glow-purple: rgba(167,139,250,0.12);
+
+  /* Fonts */
+  --font-heading: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-pill: 99px;
+}
+
+/* ─── Global Dark Background ───────────────────────────────── */
+
+html,
+body {
+  background-color: #0A0A0F;
+  color: #E8E8F0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent white flash on load */
+body {
+  overscroll-behavior: none;
+}
+
+/* Scrollbar styling (web preview only) */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A38;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333345;
+}

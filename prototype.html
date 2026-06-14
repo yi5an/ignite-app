@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ignite — UI 设计稿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:       #0A0A0F;
+  --surface:  #111118;
+  --card:     #18181F;
+  --card2:    #1E1E28;
+  --border:   #2A2A38;
+  --border2:  #333345;
+  --blue:     #4F8EF7;
+  --blue2:    #3B7BF5;
+  --blueglow: rgba(79,142,247,0.18);
+  --green:    #34D399;
+  --greenglow:rgba(52,211,153,0.15);
+  --amber:    #FBBF24;
+  --amberglow:rgba(251,191,36,0.15);
+  --purple:   #A78BFA;
+  --text:     #E8E8F0;
+  --text2:    #8888A0;
+  --text3:    #55556A;
+  --work:     #4F8EF7;
+  --study:    #34D399;
+  --creative: #A78BFA;
+  --ff-head:  'Syne', sans-serif;
+  --ff-body:  'DM Sans', sans-serif;
+  --ff-mono:  'DM Mono', monospace;
+  --r-sm:     10px;
+  --r-md:     16px;
+  --r-lg:     22px;
+  --r-xl:     28px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Canvas / Layout ──────────────────────────────────────── */
+.canvas {
+  padding: 48px 32px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.canvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 56px;
+}
+
+.logo {
+  font-family: var(--ff-head);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.version-badge {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+
+.section-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: var(--ff-head);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+
+.screens-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 64px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+/* ─── Phone Frame ──────────────────────────────────────────── */
+.phone-frame {
+  flex-shrink: 0;
+  width: 320px;
+  background: #0D0D14;
+  border: 1.5px solid var(--border);
+  border-radius: 44px;
+  padding: 20px 14px 24px;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 32px 64px rgba(0,0,0,0.6),
+    0 0 80px rgba(79,142,247,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.phone-frame:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 40px 80px rgba(0,0,0,0.7),
+    0 0 100px rgba(79,142,247,0.1);
+}
+
+.phone-notch {
+  width: 100px;
+  height: 10px;
+  background: #000;
+  border-radius: 99px;
+  margin: 0 auto 16px;
+  position: relative;
+}
+.phone-notch::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #1A1A22;
+  border-radius: 50%;
+  top: 0;
+  right: 20px;
+}
+
+.phone-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6px;
+  margin-bottom: 16px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.phone-screen {
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.phone-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.nav-item:hover { opacity: 0.8; }
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--border);
+  position: relative;
+}
+.nav-item.active .nav-icon { background: var(--blue); }
+
+.nav-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+}
+.nav-item.active .nav-label { color: var(--blue); }
+
+/* ─── Screen Components ────────────────────────────────────── */
+.screen-greeting {
+  font-family: var(--ff-head);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.screen-sub {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* Streak Bar */
+.streak-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  position: relative;
+  overflow: hidden;
+}
+.streak-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--amberglow) 0%, transparent 60%);
+}
+.flame-icon {
+  font-size: 16px;
+  position: relative;
+  animation: flicker 2s ease-in-out infinite alternate;
+}
+@keyframes flicker {
+  0% { transform: scale(1) rotate(-2deg); }
+  50% { transform: scale(1.1) rotate(1deg); }
+  100% { transform: scale(0.95) rotate(-1deg); }
+}
+.streak-num {
+  font-family: var(--ff-head);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--amber);
+  position: relative;
+}
+.streak-label {
+  font-size: 11px;
+  color: var(--text3);
+  position: relative;
+}
+.streak-xp {
+  margin-left: auto;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--amber);
+  background: var(--amberglow);
+  padding: 3px 8px;
+  border-radius: 99px;
+  position: relative;
+}
+
+/* Task Card */
+.task-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.task-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  transition: opacity 0.2s;
+}
+.task-card.work::before   { background: var(--work); }
+.task-card.study::before  { background: var(--study); }
+.task-card.creative::before { background: var(--creative); }
+
+.task-card:hover {
+  border-color: var(--border2);
+  transform: translateX(2px);
+  background: var(--card2);
+}
+.task-card:hover::after {
+  content: '→ 开始专注';
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--blue);
+  opacity: 0;
+  animation: fadeIn 0.2s forwards;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+.task-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.task-name {
+  font-family: var(--ff-head);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  flex: 1;
+}
+
+.tag {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.tag.work     { background: rgba(79,142,247,0.15); color: var(--blue); border: 1px solid rgba(79,142,247,0.3); }
+.tag.study    { background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.25); }
+.tag.creative { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+
+.prog-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prog-track {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.prog-fill.work     { background: linear-gradient(90deg, var(--blue2), var(--blue)); }
+.prog-fill.study    { background: linear-gradient(90deg, #10B981, var(--green)); }
+.prog-fill.creative { background: linear-gradient(90deg, #7C3AED, var(--purple)); }
+.prog-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+  white-space: nowrap;
+}
+
+.minimal-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card2);
+  border: 1px dashed var(--border2);
+  border-radius: var(--r-sm);
+  padding: 7px 10px;
+}
+.minimal-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--amber);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+.minimal-text {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+/* FAB */
+.fab {
+  position: absolute;
+  right: 0; bottom: 48px;
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--blue2), var(--blue));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(79,142,247,0.4);
+  transition: all 0.25s;
+  line-height: 1;
+  font-weight: 300;
+}
+.fab:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 6px 28px rgba(79,142,247,0.55);
+}
+
+/* ─── Focus Screen ─────────────────────────────────────────── */
+.focus-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text3);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.focus-back:hover { color: var(--blue); }
+
+.focus-task-name {
+  font-family: var(--ff-head);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.timer-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.timer-block::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, var(--blueglow) 0%, transparent 70%);
+}
+
+.timer-ring {
+  position: relative;
+  width: 120px; height: 120px;
+  margin-bottom: 4px;
+}
+
+.timer-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+}
+.timer-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 4;
+}
+.timer-prog {
+  fill: none;
+  stroke: url(#blueGrad);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 345;
+  stroke-dashoffset: 86;
+  transition: stroke-dashoffset 1s linear;
+  filter: drop-shadow(0 0 4px rgba(79,142,247,0.5));
+}
+
+.timer-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.timer-digits {
+  font-family: var(--ff-mono);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -1px;
+  position: relative;
+}
+.timer-session {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+}
+
+.timer-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--blue);
+  letter-spacing: 0.08em;
+  position: relative;
+}
+
+/* Steps */
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  transition: background 0.2s;
+}
+.step-item.current {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+}
+
+.step-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.step-dot.done {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 8px var(--greenglow);
+}
+.step-dot.done::after {
+  content: '✓';
+  font-size: 9px;
+  color: #000;
+  font-weight: 700;
+}
+.step-dot.current-dot {
+  border-color: var(--blue);
+  background: rgba(79,142,247,0.1);
+  animation: pulse-blue 2s ease-in-out infinite;
+}
+.step-dot.current-dot::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 6px var(--blue);
+}
+@keyframes pulse-blue {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79,142,247,0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(79,142,247,0.1); }
+}
+
+.step-text {
+  font-size: 12px;
+  color: var(--text2);
+  flex: 1;
+}
+.step-item.current .step-text {
+  color: var(--text);
+  font-weight: 500;
+}
+.step-item.done .step-text {
+  text-decoration: line-through;
+  color: var(--text3);
+}
+.step-min {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue2), var(--blue));
+  color: #fff;
+  border: none;
+  border-radius: var(--r-md);
+  padding: 13px;
+  font-family: var(--ff-head);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(79,142,247,0.3);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(79,142,247,0.4); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { color: var(--text2); border-color: var(--border2); background: var(--card2); }
+
+/* ─── Capture Screen ───────────────────────────────────────── */
+.capture-area {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.capture-area.focused {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blueglow);
+}
+
+.capture-input-mock {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  min-height: 60px;
+}
+.capture-cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 14px;
+  background: var(--blue);
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.ai-analyzing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--blue);
+}
+.ai-dots {
+  display: flex;
+  gap: 3px;
+}
+.ai-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--blue);
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+.ai-dot:nth-child(2) { animation-delay: 0.2s; }
+.ai-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-4px); opacity: 1; }
+}
+
+.suggestion-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.chip {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  background: var(--card2);
+  white-space: nowrap;
+}
+.chip.active {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: var(--blueglow);
+}
+
+.ai-steps-preview {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ai-steps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ai-badge {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--purple);
+  background: rgba(167,139,250,0.12);
+  border: 1px solid rgba(167,139,250,0.25);
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+.ai-step-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ai-step-num {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+  width: 16px;
+  flex-shrink: 0;
+}
+.ai-step-text {
+  font-size: 12px;
+  color: var(--text2);
+  flex: 1;
+}
+.ai-step-min {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Achievement Screen ────────────────────────────────────── */
+.stat-grid {
+  display: flex;
+  gap: 8px;
+}
+.stat-card {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border2);
+}
+.stat-icon {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+.stat-num {
+  font-family: var(--ff-head);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+.stat-lbl {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  color: var(--text3);
+  text-align: center;
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.badge-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.badge-card.unlocked:hover {
+  transform: scale(1.05);
+  border-color: var(--border2);
+}
+.badge-card.locked {
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+.badge-emoji {
+  font-size: 24px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+.badge-name {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  color: var(--text2);
+  text-align: center;
+  line-height: 1.3;
+}
+.badge-card.unlocked .badge-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+
+.milestone-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.milestone-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.milestone-name {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+}
+.milestone-frac {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--text3);
+}
+.milestone-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.milestone-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7C3AED, var(--purple));
+  border-radius: 99px;
+  box-shadow: 0 0 8px rgba(167,139,250,0.4);
+}
+
+/* ─── Calendar Strip ────────────────────────────────────────── */
+.cal-strip {
+  display: flex;
+  gap: 4px;
+}
+.cal-day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.cal-label {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  color: var(--text3);
+}
+.cal-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.cal-dot.done {
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 0 8px rgba(79,142,247,0.4);
+}
+.cal-dot.today {
+  border-color: var(--blue);
+  background: var(--blueglow);
+}
+.cal-num {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  color: var(--text3);
+}
+.cal-dot.done .cal-num { color: #fff; font-weight: 600; }
+
+/* ─── Interaction Labels ────────────────────────────────────── */
+.interaction-notes {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.4;
+}
+.note-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--blue);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+/* ─── Design Spec Panel ─────────────────────────────────────── */
+.spec-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 32px;
+  margin-bottom: 40px;
+}
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+.spec-group-title {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.color-swatch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.swatch {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.swatch-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.swatch-name {
+  font-size: 11px;
+  color: var(--text2);
+}
+.swatch-val {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+}
+
+.type-sample {
+  margin-bottom: 8px;
+}
+.type-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+  margin-bottom: 2px;
+}
+
+.spacing-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.spacing-block {
+  background: rgba(79,142,247,0.2);
+  border: 1px solid rgba(79,142,247,0.3);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.spacing-info {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--text2);
+}
+
+/* ─── Flow Section ──────────────────────────────────────────── */
+.flow-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 32px;
+  margin-bottom: 40px;
+}
+
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.flow-node {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 100px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.flow-node:hover {
+  border-color: var(--blue);
+  background: var(--card2);
+  box-shadow: 0 0 0 3px var(--blueglow);
+}
+.flow-node-name {
+  font-family: var(--ff-head);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.flow-node-desc {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 3px;
+}
+.flow-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  color: var(--text3);
+  font-size: 18px;
+}
+.flow-node.highlight {
+  border-color: var(--blue);
+  background: var(--card2);
+  box-shadow: 0 0 20px var(--blueglow);
+}
+.flow-node.highlight .flow-node-name { color: var(--blue); }
+
+/* ─── Scroll Hint ───────────────────────────────────────────── */
+.scroll-x-hint {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--text3);
+  margin-top: 8px;
+}
+
+/* ─── SVG defs (hidden) ─────────────────────────────────────── */
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ─── XP Pop Animation ──────────────────────────────────────── */
+.xp-pop {
+  position: fixed;
+  font-family: var(--ff-head);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--amber);
+  pointer-events: none;
+  z-index: 9999;
+  text-shadow: 0 0 20px var(--amber);
+  animation: xpFly 1.2s ease-out forwards;
+}
+@keyframes xpFly {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  50%  { opacity: 1; transform: translateY(-40px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-80px) scale(0.8); }
+}
+
+/* ─── Phone caption ─────────────────────────────────────────── */
+.phone-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.phone-caption {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+.screen-indicator {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 6px var(--blue);
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* ─── Footer ────────────────────────────────────────────────── */
+.doc-footer {
+  text-align: center;
+  padding: 32px 0 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--text3);
+}
+
+</style>
+</head>
+<body>
+
+<!-- SVG Gradient Defs -->
+<svg class="svg-defs" aria-hidden="true">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B7BF5"/>
+      <stop offset="100%" stop-color="#4F8EF7"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="canvas">
+
+  <!-- Header -->
+  <div class="canvas-header">
+    <div>
+      <div class="logo">IGNITE</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:3px;font-family:var(--ff-mono)">UI 设计稿 · 交互原型 · v1.0</div>
+    </div>
+    <div class="version-badge">React Native · Expo · iOS & Android</div>
+  </div>
+
+  <!-- ─── User Flow ─────────────────────────────────────────── -->
+  <div class="flow-section">
+    <div class="section-label">01 / 用户流程</div>
+    <div class="section-title">核心交互路径</div>
+    <div class="flow-diagram">
+      <div class="flow-node highlight">
+        <div class="flow-node-name">主页</div>
+        <div class="flow-node-desc">今日3件事</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-node-name">点击任务卡</div>
+        <div class="flow-node-desc">进入专注</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-node-name">专注模式</div>
+        <div class="flow-node-desc">番茄钟 + 步骤</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-node-name">完成步骤</div>
+        <div class="flow-node-desc">获得 XP</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-node-name">成就页</div>
+        <div class="flow-node-desc">查看进度</div>
+      </div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:40px;height:1px;background:var(--blue)"></div>
+        <span style="font-size:11px;color:var(--text3);font-family:var(--ff-mono)">主路径</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:40px;height:1px;background:var(--border2);border-top:1px dashed var(--border2)"></div>
+        <span style="font-size:11px;color:var(--text3);font-family:var(--ff-mono)">次路径：+ 新建 → AI拆解 → 确认 → 加入今日</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Screen Designs ───────────────────────────────────── -->
+  <div class="section-label">02 / 界面设计</div>
+  <div class="section-title">四个核心页面</div>
+  <div class="screens-row">
+
+    <!-- ── Screen 1: Today ── -->
+    <div class="phone-wrap">
+      <div class="phone-frame" id="phone-today">
+        <div class="phone-notch"></div>
+        <div class="phone-status">
+          <span>09:41</span>
+          <span>●●●</span>
+        </div>
+        <div class="phone-screen">
+
+          <div>
+            <div class="screen-greeting">早上好 👋</div>
+            <div class="screen-sub">周四 · 你有 3 件事等待点燃</div>
+          </div>
+
+          <div class="streak-bar">
+            <div class="flame-icon">🔥</div>
+            <span class="streak-num">7</span>
+            <span class="streak-label">天连续打卡</span>
+            <span class="streak-xp">+50 XP 今日</span>
+          </div>
+
+          <!-- Task 1 -->
+          <div class="task-card work" id="card-1" onclick="openFocus(this)" style="cursor:pointer">
+            <div class="task-row">
+              <div class="task-name">完成Q3季度报告</div>
+              <div class="tag work">工作</div>
+            </div>
+            <div class="prog-row">
+              <div class="prog-track"><div class="prog-fill work" style="width:60%"></div></div>
+              <span class="prog-label">3 / 5 步</span>
+            </div>
+          </div>
+
+          <!-- Task 2 -->
+          <div class="task-card study" id="card-2" onclick="openFocus(this)" style="cursor:pointer">
+            <div class="task-row">
+              <div class="task-name">学习 SwiftUI 布局系统</div>
+              <div class="tag study">学习</div>
+            </div>
+            <div class="prog-row">
+              <div class="prog-track"><div class="prog-fill study" style="width:25%"></div></div>
+              <span class="prog-label">1 / 4 步</span>
+            </div>
+          </div>
+
+          <!-- Task 3 - not started -->
+          <div class="task-card creative" id="card-3" onclick="openFocus(this)" style="cursor:pointer">
+            <div class="task-row">
+              <div class="task-name">写播客节目大纲</div>
+              <div class="tag creative">创意</div>
+            </div>
+            <div class="prog-row">
+              <div class="prog-track"><div class="prog-fill creative" style="width:0%"></div></div>
+              <span class="prog-label">0 / 4 步</span>
+            </div>
+            <div class="minimal-step">
+              <div class="minimal-dot"></div>
+              <span class="minimal-text">最小一步：打开备忘录，写第一个主题词</span>
+            </div>
+          </div>
+
+          <div class="fab" onclick="openCapture()" title="新建任务">+</div>
+
+          <div style="height:44px"></div>
+          <div class="phone-nav">
+            <div class="nav-item active">
+              <div class="nav-icon"></div>
+              <span class="nav-label">今天</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">所有</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">成就</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">我的</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-caption"><span class="screen-indicator"></span>主页 · 今日视图</div>
+      <div class="interaction-notes">
+        <div class="note"><div class="note-dot"></div>点击任务卡片 → 进入专注模式</div>
+        <div class="note"><div class="note-dot"></div>点击 + → 新建任务 / AI拆解</div>
+        <div class="note"><div class="note-dot"></div>长按卡片 → 移出今日 / 删除</div>
+        <div class="note"><div class="note-dot"></div>下拉刷新 → 重新精选今日3件事</div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Focus ── -->
+    <div class="phone-wrap">
+      <div class="phone-frame" id="phone-focus">
+        <div class="phone-notch"></div>
+        <div class="phone-status">
+          <span>09:41</span>
+          <span>●●●</span>
+        </div>
+        <div class="phone-screen">
+
+          <div class="focus-back" onclick="goHome()">
+            <span style="font-size:16px">‹</span>
+            <span>离开专注</span>
+          </div>
+
+          <div>
+            <div class="focus-task-name">写播客节目大纲</div>
+            <div class="screen-sub" style="margin-top:3px">创意 · 预计 45 分钟</div>
+          </div>
+
+          <!-- Timer -->
+          <div class="timer-block">
+            <div class="timer-ring">
+              <svg class="timer-svg" viewBox="0 0 120 120">
+                <circle class="timer-track" cx="60" cy="60" r="55"/>
+                <circle class="timer-prog" id="timerRing" cx="60" cy="60" r="55"/>
+              </svg>
+              <div class="timer-num">
+                <div class="timer-digits" id="timerDisplay">24:37</div>
+                <div class="timer-session">第 1 个番茄</div>
+              </div>
+            </div>
+            <div class="timer-label">FOCUS · 番茄钟进行中</div>
+          </div>
+
+          <!-- Steps -->
+          <div class="step-list">
+            <div class="step-item done">
+              <div class="step-dot done"></div>
+              <span class="step-text">写下 3 个主题方向</span>
+              <span class="step-min">10分钟</span>
+            </div>
+            <div class="step-item current">
+              <div class="step-dot current-dot"></div>
+              <span class="step-text">展开第一个主题的核心要点</span>
+              <span class="step-min">15分钟</span>
+            </div>
+            <div class="step-item">
+              <div class="step-dot"></div>
+              <span class="step-text">草拟开场白和节目钩子</span>
+              <span class="step-min">10分钟</span>
+            </div>
+            <div class="step-item">
+              <div class="step-dot"></div>
+              <span class="step-text">列出嘉宾访谈问题</span>
+              <span class="step-min">10分钟</span>
+            </div>
+          </div>
+
+          <div class="btn-primary" id="completeBtn" onclick="completeStep()">
+            完成当前步骤 · +20 XP
+          </div>
+          <div class="btn-ghost">跳过，先休息一下</div>
+
+          <div class="phone-nav" style="margin-top:auto">
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">今天</span>
+            </div>
+            <div class="nav-item active">
+              <div class="nav-icon"></div>
+              <span class="nav-label">专注</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">成就</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">我的</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-caption"><span class="screen-indicator"></span>专注模式 · 番茄钟</div>
+      <div class="interaction-notes">
+        <div class="note"><div class="note-dot"></div>「完成步骤」→ XP 动画弹出，步骤划掉</div>
+        <div class="note"><div class="note-dot"></div>环形进度条实时更新，精确到秒</div>
+        <div class="note"><div class="note-dot"></div>点击计时数字 → 暂停/继续</div>
+        <div class="note"><div class="note-dot"></div>左划离开 → 弹出「确认退出专注」</div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Capture / New Task ── -->
+    <div class="phone-wrap">
+      <div class="phone-frame" id="phone-capture">
+        <div class="phone-notch"></div>
+        <div class="phone-status">
+          <span>09:41</span>
+          <span>●●●</span>
+        </div>
+        <div class="phone-screen">
+
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div class="focus-task-name">新想法</div>
+              <div class="screen-sub" style="margin-top:2px">随便说，AI 来拆解</div>
+            </div>
+            <div style="font-family:var(--ff-mono);font-size:11px;color:var(--blue);cursor:pointer">取消</div>
+          </div>
+
+          <!-- Input area -->
+          <div class="capture-area focused">
+            <div class="capture-input-mock">
+              我想做一个关于 AI 工具的 newsletter，每周发一期推荐好用的工具<span class="capture-cursor"></span>
+            </div>
+            <hr class="separator">
+            <div class="ai-analyzing">
+              <div class="ai-dots">
+                <div class="ai-dot"></div>
+                <div class="ai-dot"></div>
+                <div class="ai-dot"></div>
+              </div>
+              AI 正在理解你的想法…
+            </div>
+          </div>
+
+          <!-- AI suggestions -->
+          <div class="suggestion-chips">
+            <div class="chip active">创意类</div>
+            <div class="chip active">预计 3 小时</div>
+            <div class="chip active">建议拆成 5 步</div>
+          </div>
+
+          <!-- AI steps preview -->
+          <div class="ai-steps-preview">
+            <div class="ai-steps-header">
+              <span style="font-size:12px;color:var(--text2);font-weight:500">AI 拆解的步骤</span>
+              <span class="ai-badge">✦ Claude AI</span>
+            </div>
+            <div class="ai-step-row">
+              <span class="ai-step-num">01</span>
+              <span class="ai-step-text">确定目标读者和定位方向</span>
+              <span class="ai-step-min">20分钟</span>
+            </div>
+            <div class="ai-step-row">
+              <span class="ai-step-num">02</span>
+              <span class="ai-step-text">规划前5期的内容主题</span>
+              <span class="ai-step-min">30分钟</span>
+            </div>
+            <div class="ai-step-row">
+              <span class="ai-step-num">03</span>
+              <span class="ai-step-text">注册 Beehiiv 发送平台</span>
+              <span class="ai-step-min">15分钟</span>
+            </div>
+            <div class="ai-step-row">
+              <span class="ai-step-num">04</span>
+              <span class="ai-step-text">写第一期内容草稿</span>
+              <span class="ai-step-min">60分钟</span>
+            </div>
+            <div class="ai-step-row">
+              <span class="ai-step-num">05</span>
+              <span class="ai-step-text">发送测试版本给5位好友</span>
+              <span class="ai-step-min">15分钟</span>
+            </div>
+          </div>
+
+          <div class="btn-primary" onclick="showXP(event)">加入今日计划</div>
+          <div class="btn-ghost">先存起来</div>
+
+          <div class="phone-nav" style="margin-top:auto">
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">今天</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">所有</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">成就</span>
+            </div>
+            <div class="nav-item active">
+              <div class="nav-icon"></div>
+              <span class="nav-label">新建</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-caption"><span class="screen-indicator"></span>新建任务 · AI 拆解</div>
+      <div class="interaction-notes">
+        <div class="note"><div class="note-dot"></div>输入结束后自动调用 Claude API</div>
+        <div class="note"><div class="note-dot"></div>步骤可左划删除、长按拖拽排序</div>
+        <div class="note"><div class="note-dot"></div>「重新拆解」→ 重新调用 API</div>
+        <div class="note"><div class="note-dot"></div>截止日期选择器（可选）</div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Achievements ── -->
+    <div class="phone-wrap">
+      <div class="phone-frame" id="phone-ach">
+        <div class="phone-notch"></div>
+        <div class="phone-status">
+          <span>09:41</span>
+          <span>●●●</span>
+        </div>
+        <div class="phone-screen">
+
+          <div>
+            <div class="focus-task-name">我的成就</div>
+            <div class="screen-sub" style="margin-top:2px">本周表现不错 🎉</div>
+          </div>
+
+          <!-- Stats -->
+          <div class="stat-grid">
+            <div class="stat-card" style="position:relative;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%, var(--amberglow) 0%, transparent 70%)"></div>
+              <span class="stat-icon">🔥</span>
+              <span class="stat-num" style="color:var(--amber)">340</span>
+              <span class="stat-lbl">总 XP</span>
+            </div>
+            <div class="stat-card" style="position:relative;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%, var(--blueglow) 0%, transparent 70%)"></div>
+              <span class="stat-icon">⚡</span>
+              <span class="stat-num" style="color:var(--blue)">7</span>
+              <span class="stat-lbl">连续天</span>
+            </div>
+            <div class="stat-card" style="position:relative;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%, var(--greenglow) 0%, transparent 70%)"></div>
+              <span class="stat-icon">✓</span>
+              <span class="stat-num" style="color:var(--green)">12</span>
+              <span class="stat-lbl">完成项</span>
+            </div>
+          </div>
+
+          <!-- Badges -->
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em">本周徽章</div>
+          <div class="badge-grid">
+            <div class="badge-card unlocked">
+              <div class="badge-glow"></div>
+              <div class="badge-emoji">⚡</div>
+              <div class="badge-name">启动者 ×3</div>
+            </div>
+            <div class="badge-card unlocked">
+              <div class="badge-glow"></div>
+              <div class="badge-emoji">🗓️</div>
+              <div class="badge-name">连续出勤</div>
+            </div>
+            <div class="badge-card unlocked">
+              <div class="badge-glow"></div>
+              <div class="badge-emoji">🎨</div>
+              <div class="badge-name">创意开花</div>
+            </div>
+            <div class="badge-card locked">
+              <div class="badge-emoji">🚀</div>
+              <div class="badge-name">执行达人</div>
+            </div>
+            <div class="badge-card locked">
+              <div class="badge-emoji">🏆</div>
+              <div class="badge-name">月度冠军</div>
+            </div>
+            <div class="badge-card locked">
+              <div class="badge-emoji">💎</div>
+              <div class="badge-name">百步俱乐部</div>
+            </div>
+          </div>
+
+          <!-- Milestone -->
+          <div class="milestone-block">
+            <div class="milestone-row">
+              <span class="milestone-name">执行达人</span>
+              <span class="milestone-frac">12 / 20 步</span>
+            </div>
+            <div class="milestone-track">
+              <div class="milestone-fill" style="width:60%"></div>
+            </div>
+            <div style="font-size:10px;color:var(--text3)">再完成 8 个步骤解锁称号</div>
+          </div>
+
+          <!-- Calendar -->
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em">本周打卡</div>
+          <div class="cal-strip">
+            <div class="cal-day"><span class="cal-label">一</span><div class="cal-dot done"><span class="cal-num" style="color:#fff;font-weight:600;font-size:8px">10</span></div></div>
+            <div class="cal-day"><span class="cal-label">二</span><div class="cal-dot done"><span class="cal-num" style="color:#fff;font-weight:600;font-size:8px">11</span></div></div>
+            <div class="cal-day"><span class="cal-label">三</span><div class="cal-dot done"><span class="cal-num" style="color:#fff;font-weight:600;font-size:8px">12</span></div></div>
+            <div class="cal-day"><span class="cal-label">四</span><div class="cal-dot today"><span class="cal-num" style="color:var(--blue);font-size:8px">13</span></div></div>
+            <div class="cal-day"><span class="cal-label">五</span><div class="cal-dot"><span class="cal-num">14</span></div></div>
+            <div class="cal-day"><span class="cal-label">六</span><div class="cal-dot"><span class="cal-num">15</span></div></div>
+            <div class="cal-day"><span class="cal-label">日</span><div class="cal-dot"><span class="cal-num">16</span></div></div>
+          </div>
+
+          <div class="phone-nav" style="margin-top:auto">
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">今天</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">所有</span>
+            </div>
+            <div class="nav-item active">
+              <div class="nav-icon"></div>
+              <span class="nav-label">成就</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon"></div>
+              <span class="nav-label">我的</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-caption"><span class="screen-indicator"></span>成就页 · 游戏化系统</div>
+      <div class="interaction-notes">
+        <div class="note"><div class="note-dot"></div>点击数据卡 → 历史趋势图（后续版本）</div>
+        <div class="note"><div class="note-dot"></div>点击锁定徽章 → 显示解锁条件</div>
+        <div class="note"><div class="note-dot"></div>解锁徽章时 → 全屏庆祝动画</div>
+        <div class="note"><div class="note-dot"></div>左右滑动日历 → 查看历史月份</div>
+      </div>
+    </div>
+
+  </div><!-- end screens-row -->
+
+  <!-- ─── Design Spec ──────────────────────────────────────── -->
+  <div class="spec-section">
+    <div class="section-label">03 / 设计规范</div>
+    <div class="section-title">Design Tokens</div>
+
+    <div class="spec-grid">
+
+      <!-- Colors -->
+      <div>
+        <div class="spec-group-title">色彩系统</div>
+        <div class="color-swatch">
+          <div class="swatch" style="background:#4F8EF7"></div>
+          <div class="swatch-info"><div class="swatch-name">主色 · Blue</div><div class="swatch-val">#4F8EF7</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background:#34D399"></div>
+          <div class="swatch-info"><div class="swatch-name">成功 · Green</div><div class="swatch-val">#34D399</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background:#FBBF24"></div>
+          <div class="swatch-info"><div class="swatch-name">奖励 · Amber</div><div class="swatch-val">#FBBF24</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background:#A78BFA"></div>
+          <div class="swatch-info"><div class="swatch-name">创意 · Purple</div><div class="swatch-val">#A78BFA</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background:#0A0A0F;border:1px solid #2A2A38"></div>
+          <div class="swatch-info"><div class="swatch-name">背景 · Base</div><div class="swatch-val">#0A0A0F</div></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background:#18181F;border:1px solid #2A2A38"></div>
+          <div class="swatch-info"><div class="swatch-name">卡片 · Card</div><div class="swatch-val">#18181F</div></div>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div>
+        <div class="spec-group-title">字体系统</div>
+        <div class="type-sample">
+          <div class="type-label">Display · Syne 800</div>
+          <div style="font-family:var(--ff-head);font-size:20px;font-weight:800;color:var(--text)">Ignite 点燃行动</div>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">Heading · Syne 700 · 15px</div>
+          <div style="font-family:var(--ff-head);font-size:15px;font-weight:700;color:var(--text)">今日任务</div>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">Body · DM Sans 400 · 13px</div>
+          <div style="font-family:var(--ff-body);font-size:13px;color:var(--text2)">完成季度报告，拆成5个步骤</div>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">Caption · DM Sans 300 · 11px</div>
+          <div style="font-family:var(--ff-body);font-size:11px;font-weight:300;color:var(--text3)">最小一步：打开文档</div>
+        </div>
+        <div class="type-sample">
+          <div class="type-label">Mono · DM Mono 400 · 10px</div>
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--text3)">24:37 · P0 · #4F8EF7</div>
+        </div>
+      </div>
+
+      <!-- Spacing -->
+      <div>
+        <div class="spec-group-title">间距系统</div>
+        <div class="spacing-row">
+          <div class="spacing-block" style="width:4px;height:16px"></div>
+          <span class="spacing-info">xs · 4px</span>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-block" style="width:8px;height:16px"></div>
+          <span class="spacing-info">sm · 8px</span>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-block" style="width:12px;height:16px"></div>
+          <span class="spacing-info">md · 12px</span>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-block" style="width:16px;height:16px"></div>
+          <span class="spacing-info">lg · 16px</span>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-block" style="width:24px;height:16px"></div>
+          <span class="spacing-info">xl · 24px</span>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-block" style="width:32px;height:16px"></div>
+          <span class="spacing-info">2xl · 32px</span>
+        </div>
+
+        <div class="spec-group-title" style="margin-top:20px">圆角系统</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <div style="width:28px;height:28px;background:var(--card2);border:1px solid var(--border2);border-radius:6px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:7px;color:var(--text3);font-family:var(--ff-mono)">sm</span>
+          </div>
+          <div style="width:28px;height:28px;background:var(--card2);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:7px;color:var(--text3);font-family:var(--ff-mono)">md</span>
+          </div>
+          <div style="width:28px;height:28px;background:var(--card2);border:1px solid var(--border2);border-radius:16px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:7px;color:var(--text3);font-family:var(--ff-mono)">lg</span>
+          </div>
+          <div style="width:28px;height:28px;background:var(--card2);border:1px solid var(--border2);border-radius:22px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:7px;color:var(--text3);font-family:var(--ff-mono)">xl</span>
+          </div>
+          <div style="width:28px;height:28px;background:var(--card2);border:1px solid var(--border2);border-radius:99px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:7px;color:var(--text3);font-family:var(--ff-mono)">pill</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Motion & States -->
+      <div>
+        <div class="spec-group-title">动效规范</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:11px;color:var(--text2)">
+            <span style="color:var(--text3);font-family:var(--ff-mono);font-size:9px;display:block;margin-bottom:2px">MICRO 微交互</span>
+            卡片 hover：translateX(2px) 0.25s cubic<br>按钮 hover：translateY(-1px) 0.2s ease<br>FAB hover：scale(1.1) rotate(90deg)
+          </div>
+          <div style="font-size:11px;color:var(--text2)">
+            <span style="color:var(--text3);font-family:var(--ff-mono);font-size:9px;display:block;margin-bottom:2px">FEEDBACK 反馈动效</span>
+            XP 获得：+20XP 数字向上飞出消失<br>步骤完成：√ 弹出 + 绿色光晕<br>徽章解锁：全屏粒子庆祝动画
+          </div>
+          <div style="font-size:11px;color:var(--text2)">
+            <span style="color:var(--text3);font-family:var(--ff-mono);font-size:9px;display:block;margin-bottom:2px">AMBIENT 氛围动效</span>
+            火焰图标：上下浮动 flicker<br>最小一步·: pulse 呼吸脉冲<br>当前步骤圆点：ring pulse
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Component States ─────────────────────────────────── -->
+  <div class="spec-section">
+    <div class="section-label">04 / 组件状态</div>
+    <div class="section-title">交互状态展示</div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:20px">
+
+      <!-- Task Card States -->
+      <div style="flex:1;min-width:220px">
+        <div class="spec-group-title">任务卡片 · 3种状态</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div style="font-size:10px;color:var(--text3);margin-bottom:6px;font-family:var(--ff-mono)">进行中</div>
+            <div class="task-card work" style="cursor:default">
+              <div class="task-row">
+                <div class="task-name">完成Q3季度报告</div>
+                <div class="tag work">工作</div>
+              </div>
+              <div class="prog-row">
+                <div class="prog-track"><div class="prog-fill work" style="width:60%"></div></div>
+                <span class="prog-label">3 / 5 步</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--text3);margin-bottom:6px;font-family:var(--ff-mono)">未开始（有最小一步）</div>
+            <div class="task-card creative" style="cursor:default">
+              <div class="task-row">
+                <div class="task-name">写播客大纲</div>
+                <div class="tag creative">创意</div>
+              </div>
+              <div class="prog-row">
+                <div class="prog-track"><div class="prog-fill creative" style="width:0%"></div></div>
+                <span class="prog-label">0 / 4 步</span>
+              </div>
+              <div class="minimal-step">
+                <div class="minimal-dot"></div>
+                <span class="minimal-text">最小一步：打开备忘录</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--text3);margin-bottom:6px;font-family:var(--ff-mono)">已完成</div>
+            <div class="task-card study" style="cursor:default;opacity:0.5;filter:grayscale(0.3)">
+              <div class="task-row">
+                <div class="task-name" style="text-decoration:line-through">学习 SwiftUI</div>
+                <div class="tag study">学习</div>
+              </div>
+              <div class="prog-row">
+                <div class="prog-track"><div class="prog-fill study" style="width:100%"></div></div>
+                <span class="prog-label" style="color:var(--green)">4 / 4 ✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Button States -->
+      <div style="flex:1;min-width:180px">
+        <div class="spec-group-title">按钮 · 4种状态</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div style="font-size:10px;color:var(--text3);margin-bottom:6px;font-family:var(--ff-mono)">主按钮 Default</div>
+            <div class="btn-primary" style="width:auto;display:inline-block;padding:10px 20px">完成步骤 +20XP</div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--text3);margin-bottom:6px;font-family:var(--ff-mono)">主按钮 Hover（悬浮试试）</div>
+            <div class="btn-primary" style="width:auto;display:inline-block;padding:10px 20px;transform:translateY(-1px);box-shadow:0 6px 28px rgba(79,142,247,0.4)">完成步骤 +20XP</div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--text3);margin-bottom:6px;font-family:var(--ff-mono)">幽灵按钮</div>
+            <div class="btn-ghost" style="display:inline-block;padding:8px 20px">跳过休息一下</div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--text3);margin-bottom:6px;font-family:var(--ff-mono)">危险操作</div>
+            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#F87171;border-radius:var(--r-md);padding:8px 20px;display:inline-block;font-size:12px;cursor:pointer">放弃任务</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div style="flex:1;min-width:160px">
+        <div class="spec-group-title">标签 · 3种类型</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="tag work" style="display:inline-block">工作</div>
+            <div style="font-size:10px;color:var(--text3);font-family:var(--ff-mono)">Blue #4F8EF7 / opacity 0.15bg</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="tag study" style="display:inline-block">学习</div>
+            <div style="font-size:10px;color:var(--text3);font-family:var(--ff-mono)">Green #34D399 / opacity 0.12bg</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="tag creative" style="display:inline-block">创意</div>
+            <div style="font-size:10px;color:var(--text3);font-family:var(--ff-mono)">Purple #A78BFA / opacity 0.12bg</div>
+          </div>
+        </div>
+
+        <div class="spec-group-title" style="margin-top:20px">进度条 · 颜色</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+          <div>
+            <div style="font-size:9px;color:var(--text3);font-family:var(--ff-mono);margin-bottom:4px">工作 60%</div>
+            <div class="prog-track"><div class="prog-fill work" style="width:60%"></div></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--text3);font-family:var(--ff-mono);margin-bottom:4px">学习 35%</div>
+            <div class="prog-track"><div class="prog-fill study" style="width:35%"></div></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--text3);font-family:var(--ff-mono);margin-bottom:4px">创意 0%</div>
+            <div class="prog-track"><div class="prog-fill creative" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="doc-footer">
+    IGNITE · UI 设计稿 v1.0 · 深色沉浸式 · Syne + DM Sans + DM Mono
+    <br><br>
+  </div>
+
+</div><!-- end canvas -->
+
+<!-- ─── JS Interactions ──────────────────────────────────────── -->
+<script>
+// Timer countdown
+let timerSec = 24 * 60 + 37;
+const totalSec = 25 * 60;
+const circumference = 345;
+const ring = document.getElementById('timerRing');
+const display = document.getElementById('timerDisplay');
+
+function updateTimer() {
+  if (timerSec <= 0) return;
+  timerSec--;
+  const min = Math.floor(timerSec / 60).toString().padStart(2, '0');
+  const sec = (timerSec % 60).toString().padStart(2, '0');
+  display.textContent = `${min}:${sec}`;
+  const progress = 1 - timerSec / totalSec;
+  const offset = circumference - progress * circumference;
+  ring.style.strokeDashoffset = offset;
+}
+setInterval(updateTimer, 1000);
+
+// XP pop animation
+function showXP(e) {
+  const pop = document.createElement('div');
+  pop.className = 'xp-pop';
+  pop.textContent = '+20 XP ⚡';
+  pop.style.left = (e.clientX - 30) + 'px';
+  pop.style.top = (e.clientY - 10) + 'px';
+  document.body.appendChild(pop);
+  setTimeout(() => pop.remove(), 1200);
+}
+
+// Complete step interaction
+let stepsDone = 1;
+function completeStep() {
+  const steps = document.querySelectorAll('#phone-focus .step-item');
+  const btn = document.getElementById('completeBtn');
+
+  // Find current
+  const cur = document.querySelector('#phone-focus .step-item.current');
+  const curDot = cur?.querySelector('.step-dot');
+
+  if (cur && stepsDone < steps.length) {
+    // Animate
+    cur.classList.remove('current');
+    cur.classList.add('done');
+    if (curDot) {
+      curDot.className = 'step-dot done';
+      curDot.innerHTML = '';
+    }
+    cur.querySelector('.step-text').style.textDecoration = 'line-through';
+
+    const next = steps[stepsDone];
+    if (next) {
+      next.classList.add('current');
+      const nd = next.querySelector('.step-dot');
+      if (nd) {
+        nd.className = 'step-dot current-dot';
+        nd.innerHTML = '';
+      }
+    }
+    stepsDone++;
+
+    // XP pop
+    const rect = btn.getBoundingClientRect();
+    const pop = document.createElement('div');
+    pop.className = 'xp-pop';
+    pop.textContent = '+20 XP';
+    pop.style.left = (rect.left + rect.width / 2 - 30) + 'px';
+    pop.style.top = (rect.top - 10) + 'px';
+    document.body.appendChild(pop);
+    setTimeout(() => pop.remove(), 1200);
+
+    if (stepsDone >= steps.length) {
+      btn.textContent = '🎉 所有步骤完成！';
+      btn.style.background = 'linear-gradient(135deg, #059669, #34D399)';
+    }
+  }
+}
+
+// Scroll to focus phone on card click
+function openFocus(el) {
+  el.style.transform = 'scale(0.97)';
+  setTimeout(() => { el.style.transform = ''; }, 150);
+  document.getElementById('phone-focus').scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  document.getElementById('phone-focus').style.boxShadow = '0 0 0 2px var(--blue), 0 32px 64px rgba(0,0,0,0.6)';
+  setTimeout(() => {
+    document.getElementById('phone-focus').style.boxShadow = '';
+  }, 1500);
+}
+
+function openCapture() {
+  document.getElementById('phone-capture').scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  document.getElementById('phone-capture').style.boxShadow = '0 0 0 2px var(--purple), 0 32px 64px rgba(0,0,0,0.6)';
+  setTimeout(() => {
+    document.getElementById('phone-capture').style.boxShadow = '';
+  }, 1500);
+}
+
+function goHome() {
+  document.getElementById('phone-today').scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+</script>
+</body>
+</html>

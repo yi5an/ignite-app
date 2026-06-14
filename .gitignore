@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules/
+node_modules 2/
 
 # Expo
 .expo/
@@ -41,3 +42,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# local build caches
+.build/
